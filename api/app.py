@@ -22,7 +22,7 @@ def process_query(query):
         return "Unknown"
 
     if query == "What is your name?":
-        return "team"
+        return "name"
 
     if "plus" in query:
         query_words = query.split(" ")

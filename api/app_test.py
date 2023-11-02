@@ -9,7 +9,7 @@ Earth 200 million years ago"
 
 def test_knows_team_name():
 
-    assert process_query("What is your name?") == "team"
+    assert process_query("What is your name?") == "name"
 
 
 def test_does_not_know_about_asteroids():
