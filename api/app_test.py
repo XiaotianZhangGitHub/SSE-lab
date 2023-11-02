@@ -22,6 +22,6 @@ def test_minus():
     assert process_query("What is 30 minus 25?") == "5"
 
 
-def test_multiply():
+def test_multiplication():
 
     assert process_query("What is 2 multiplied 25?") == "50"
