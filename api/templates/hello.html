@@ -11,9 +11,23 @@
     <h2>GitHub Repositories:</h2>
     <ul>
         {% for repo in repositories %}
-            <li>{{ repo.name }}</li>
-        {% endfor %}
-    </ul>
+            <li>
+                <strong>Name:</strong> {{ repo.name }}<br>
+                <strong>URL:</strong> {{ repo.url }}<br>
+                {% if repo.commit_info %}
+                    <strong>Latest Commit:</strong> <br>
+                    <ul>
+                        <li><strong>Hash:</strong> {{ repo.commit_info.hash }}</li>
+                        <li><strong>Author:</strong> {{ repo.commit_info.author }}</li>
+                        <li><strong>Date:</strong> {{ repo.commit_info.date }}</li>
+                        <li><strong>Message:</strong> {{ repo.commit_info.message }}</li>
+                    </ul>
+                {% else %}
+                    No commit information available.
+                {% endif %}
+            </li>
+    {% endfor %}
+</ul>
 </body>
 </html>
 
