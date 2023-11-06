@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, requests
 app = Flask(__name__)
 
 
@@ -12,12 +12,11 @@ def submit():
                            github_username=input_githubusername)
 
 
-import requests
-response = requests.get(“https://api.github.com/users/{GITHUB_USERNAME}/repos”)
+response = requests.get("https://api.github.com/users/{GITHUB_USERNAME}/repos")
 if response.status_code == 200:
-    repos = response.json() # data returned is a list of ‘repository’ entities
+    repos = response.json()  # data returned is a list of ‘repository’ entities
     for repo in repos:
-        print(repo[“full_name”])
+        print(repo["full_name"])
 
 
 @app.route("/")
