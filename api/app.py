@@ -9,10 +9,10 @@ def submit():
     input_age = request.form.get("age")
     input_githubusername = request.form.get("github_username")
     repositories = get_github_repositories(input_githubusername)
-    print("Received repositories in submit route:", repositories)
     return render_template("hello.html",
                            name=input_name, age=input_age,
-                           github_username=input_githubusername)
+                           github_username=input_githubusername,
+                           repositories=repositories)
 
 
 def get_github_repositories(github_username):
