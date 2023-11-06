@@ -1,6 +1,19 @@
+<html>
+<head>
+    <title>Hello {{ name }}!</title>
+</head>
 <body>
     <h1>Hello {{ name }}!</h1>
     <p>Name: {{ name }}</p>
     <p>Age: {{ age }}</p>
-    <p>GitHubUsername: {{ github_username }}</p>
+    <p>GitHub Username: {{ github_username }}</p>
+    
+    <h2>GitHub Repositories:</h2>
+    <ul>
+        {% for repo in repositories %}
+            <li>{{ repo.full_name }}</li>
+        {% endfor %}
+    </ul>
 </body>
+</html>
+

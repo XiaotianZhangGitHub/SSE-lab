@@ -13,19 +13,56 @@ def submit():
                            github_username=input_githubusername)
 
 
-def get_github_username(github_username):
-    response = requests.get
-    ("https://api.github.com/users/{github_username}/repos")
+def get_github_repositories(github_username):
+    url = f"https://api.github.com/users/{github_username}/repos"
+    response = requests.get(url)
     if response.status_code == 200:
         repos = response.json()
+        repository_list = []
         # data returned is a list of ‘repository’ entities
         for repo in repos:
-            print(repo["full_name"])
+            repo_info = {
+                "name": repo["name"],
+                "url": repo["html_url"]
+            }
+
+            # Fetch commit information for the repository
+            commit_url = (
+                f"https://api.github.com/repos/"
+                f"{github_username}/{repo['name']}/commits"
+            )
+
+            commit_response = requests.get(commit_url)
+
+            if commit_response.status_code == 200:
+                commits = commit_response.json()
+                if commits:
+                    latest_commit = commits[0]
+                    # The first commit in the list is the latest
+                    commit_info = {
+                        "hash": latest_commit["sha"],
+                        "author": latest_commit["commit"]["author"]["name"],
+                        "date": latest_commit["commit"]["author"]["date"],
+                        "message": latest_commit["commit"]["message"]
+                    }
+                    repo_info["commit_info"] = commit_info
+                else:
+                    repo_info["commit_info"] = {}
+            else:
+                print(f"Failed to retrieve commit information"
+                      f"for {github_username}/{repo['name']}. "
+                      f"Status code: {commit_response.status_code}")
+                repo_info["commit_info"] = {}
+
+            repository_list.append(repo_info)
+
+        return repository_list
 
     else:
         # Handle the case where the request was not successful
         print(f"Failed to retrieve repositories for {github_username}." +
               f"Status code: {response.status_code}")
+        return []
 
 
 @app.route("/")
